@@ -113,6 +113,13 @@ export class SalesInvoice extends Invoice {
         ModelNameEnum.LoyaltyProgram,
         this.loyaltyProgram
       )) as LoyaltyProgram;
+      const toDate = loyaltyProgramDoc?.toDate as Date;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (toDate && new Date(toDate).getTime() < today.getTime()) {
+        return;
+      }
 
       if (!this?.grandTotal) {
         return;
